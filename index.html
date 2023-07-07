@@ -22,8 +22,46 @@
             function getComputerChoice(){
                 const options = ["rock","paper","scissors"]
                let option = Math.floor(Math.random() * options.length)
+               console.log(options[option])
                return options[option]
             }
+	    function getPlayerChoice(){
+                let player_choice = prompt("please enter your choice:","Rock,paper,scissors");
+                player_choice = player_choice.toLowerCase()
+                if (player_choice !== "rock" && player_choice !== "scissors" && player_choice !== "paper") {
+                    return ("you picked the wrong choice, please pick again.")
+                    getPlayerChoice()
+                }else {
+                  console.log(player_choice)
+                return player_choice
+                }
+         }
+
+         function game(){
+          let player_score = 0;
+          let comp_score = 0;
+
+          for (let i = 1; i <= 5; i++){
+            let result = round1(getPlayerChoice(), getComputerChoice())
+            if(result.includes("win")){
+              player_score++
+            }else if(result.includes("lose")){
+              comp_score++
+            }
+            // else{
+            //   alert("it's a tie")
+            // }
+          }
+          console.log("your final score is : " + player_score + "\n comp score is " + comp_score)
+          if(player_score > comp_score){
+            alert("you won")
+          }else if(comp_score > player_score){
+            alert("you lose")
+          }else{
+            alert("it's a tie")
+          }
+         }
+         game()
 	</script>
 </body>
 </html>
