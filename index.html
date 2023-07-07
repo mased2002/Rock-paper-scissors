@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rock-paper-scissors</title>
+</head>
+<body>
+	<script>
+		      function round1(player_selection, comp_selection){
+        player_selection = player_selection.toLowerCase()
+
+
+        if (player_selection === comp_selection){
+          return "it's a tie"
+        }else if (player_selection === "rock" && comp_selection === "scissors" || player_selection === "scissors" && comp_selection === "paper" || player_selection === "paper" && comp_selection === "rock"){
+          return "you win " + player_selection + " beats " + comp_selection
+        }else{
+          return "you lose "+ comp_selection + " beats " + player_selection
+        }
+      }
+            function getComputerChoice(){
+                const options = ["rock","paper","scissors"]
+               let option = Math.floor(Math.random() * options.length)
+               return options[option]
+            }
+	</script>
+</body>
+</html>
