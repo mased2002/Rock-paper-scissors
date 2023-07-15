@@ -3,64 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rock-paper-scissors</title>
+    <title>Document</title>
 </head>
 <body>
-	<script>
-		      function round1(player_selection, comp_selection){
-        player_selection = player_selection.toLowerCase()
+    <div class="real_content">
+    <p id="compscore">comp score</p>
+    <p id="playerscore">player score</p>
 
+    
+        <button class="choice" value="rock">Rock</button>
+        <button class="choice" value="paper">Paper</button>
+        <button class="choice" value="scissors">Scissors</button>
+    </div>
+</body>
+<script>
+    const btns = document.querySelectorAll('.choice')
+    let player_choice;
+    // this is the functin that gets the player choice.
+    btns.forEach((btn) => {
+        btn.addEventListener("click", function(){
+            player_choice = btn.value
+            let playround = round1(player_choice, getComputerChoice())
+            if (playround.includes("win")){
+                playerscore++
+            }else if(playround.includes("lose")){
+                compscore++
+            }else{
+                tie++
+            }
+            sethtml();
+        });
+    });
+
+    let playerscore = 0;
+    let compscore = 0;
+    let tie = 0;
+    
+
+    function sethtml(){
+        // this is the section that changes the scores in the html as you play.
+        const comp = document.querySelector('#compscore');
+        comp.textContent = compscore;
+
+        const player = document.querySelector('#playerscore');
+        player.textContent = playerscore;
+
+        const ties = document.querySelector("#ties");
+        if (ties) { // here it is saying if you don't find ties make a new one on the else statement.
+            ties.textContent = tie;
+        } else {
+            const newTies = document.createElement("p");
+            newTies.id = "ties";
+            newTies.textContent = tie;
+            document.body.appendChild(newTies);
+        }
+
+
+      
+        if (playerscore >= 5 || compscore >= 5){
+            const content = document.querySelector('.real_content')
+
+              // this section is for the endgame to determine the winner.
+
+            if (playerscore > compscore){
+                const game = document.createElement("h1")
+                game.classList.add('gameOver')
+                game.textContent = "CONGZ \nYOU WIN!!"
+                game.style.color = "green"
+                game.style.fontSize = "30px"
+                game.style.textAlign = "center"
+                comp.textContent = "";
+                player.textContent = "";
+                content.textContent = "";
+                ties.textContent = "";
+                content.appendChild(game)
+                content.style.display = "flex"
+                content.style.flexDirection = "column"
+                content.style.flexWrap = "wrap"
+                content.style.alignContent = "center"
+                content.style.justifyContent = "center"
+            }else if (playerscore < compscore){
+                const game = document.createElement("h1")
+                game.classList.add('gameOver')
+                game.textContent = "Ooops!!, sorry you lost!! better luck next time."
+                game.style.color = "red"
+                game.style.fontSize = "30px"
+                game.style.textAlign = "center"
+                comp.textContent = "";
+                player.textContent = "";
+                content.textContent = "";
+                ties.textContent = "";
+                content.appendChild(game)
+                content.style.display = "flex"
+                content.style.flexDirection = "column"
+                content.style.flexWrap = "wrap"
+                content.style.alignContent = "center"
+                content.style.justifyContent = "center"
+            }
+
+
+            // this is the button that restarts the game, by reloading the page.
+            const restart = document.createElement("button")
+            restart.textContent = "restart"
+            restart.style.fontSize = "25px"
+            restart.style.border = "2px solid black"
+            restart.style.borderRadius = "10px"
+            restart.style.alignContent = "center"
+            restart.style.justifyContent = "center"
+            restart.addEventListener("click",() => location.reload())
+            content.appendChild(restart)
+        }
+    }
+
+    // this is the function that plays the game by comparing the computer choice and the player choice.
+
+   function round1(player_selection, comp_selection) {
+
+    console.log(player_selection)
 
         if (player_selection === comp_selection){
-          return "it's a tie"
+          return ( "it's a tie")
         }else if (player_selection === "rock" && comp_selection === "scissors" || player_selection === "scissors" && comp_selection === "paper" || player_selection === "paper" && comp_selection === "rock"){
-          return "you win " + player_selection + " beats " + comp_selection
+          return ("you win " + player_selection + " beats " + comp_selection)
         }else{
-          return "you lose "+ comp_selection + " beats " + player_selection
+          return ("you lose "+ comp_selection + " beats " + player_selection)
         }
-      }
-            function getComputerChoice(){
+    }
+    
+// this is the function that sets the choice for the computer.
+    function getComputerChoice(){
                 const options = ["rock","paper","scissors"]
                let option = Math.floor(Math.random() * options.length)
                return options[option]
             }
-	    function getPlayerChoice(){
-                let player_choice = prompt("please enter your choice:","Rock,paper,scissors");
-                player_choice = player_choice.toLowerCase()
-                if (player_choice !== "rock" && player_choice !== "scissors" && player_choice !== "paper") {
-                    return ("you picked the wrong choice, please pick again.")
-                    getPlayerChoice()
-                }else {
-                  console.log(player_choice)
-                return player_choice
-                }
-         }
-
-         function game(){
-          let player_score = 0;
-          let comp_score = 0;
-
-          for (let i = 1; i <= 5; i++){
-            let result = round1(getPlayerChoice(), getComputerChoice())
-            if(result.includes("win")){
-              player_score++
-            }else if(result.includes("lose")){
-              comp_score++
-            }
-            // else{
-            //   alert("it's a tie")
-            // }
-          }
-          console.log("your final score is : " + player_score + "\n comp score is " + comp_score)
-          if(player_score > comp_score){
-            alert("you won")
-          }else if(comp_score > player_score){
-            alert("you lose")
-          }else{
-            alert("it's a tie")
-          }
-         }
-         game()
-	</script>
-</body>
+</script>
 </html>
